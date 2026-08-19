@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handwrite &rarr; Text</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Handwrite &rarr; Text</h1>
+  <p class="subtitle">Draw a word or line, hit <strong>Convert</strong>, and it gets typed into your document below.</p>
+</header>
+
+<main>
+  <section class="pad-panel">
+    <div class="toolbar">
+      <label class="tool">
+        Pen size
+        <input type="range" id="penSize" min="2" max="20" value="6">
+      </label>
+      <button id="clearBtn" type="button">Clear</button>
+      <button id="undoBtn" type="button">Undo stroke</button>
+      <button id="convertBtn" type="button" class="primary">Convert to text</button>
+    </div>
+    <div class="canvas-wrap">
+      <canvas id="pad"></canvas>
+      <div id="status" class="status" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="doc-panel">
+    <div class="doc-toolbar">
+      <h2>Your document</h2>
+      <div>
+        <button id="copyBtn" type="button">Copy</button>
+        <button id="downloadBtn" type="button">Download .txt</button>
+        <button id="clearDocBtn" type="button">Clear document</button>
+      </div>
+    </div>
+    <textarea id="doc" placeholder="Recognized text will appear here. You can also type or correct it directly."></textarea>
+  </section>
+</main>
+
+<script src="vendor/tesseract/tesseract.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
