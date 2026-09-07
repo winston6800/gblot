@@ -3,46 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Handwrite &rarr; Text</title>
+<title>Handwrite to Text</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>Handwrite &rarr; Text</h1>
-  <p class="subtitle">Draw a word or line, hit <strong>Convert</strong>, and it gets typed into your document below.</p>
-</header>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Live handwriting recognition</span>
+    <h1>Handwrite to text</h1>
+    <p class="subtitle">Write a word on the pad. It's read as you go &mdash; stroke by stroke &mdash; and drops into your document when you pause.</p>
+  </header>
 
-<main>
-  <section class="pad-panel">
-    <div class="toolbar">
-      <label class="tool">
-        Pen size
-        <input type="range" id="penSize" min="2" max="20" value="6">
-      </label>
-      <button id="clearBtn" type="button">Clear</button>
-      <button id="undoBtn" type="button">Undo stroke</button>
-      <button id="convertBtn" type="button" class="primary">Convert to text</button>
-    </div>
-    <div class="canvas-wrap">
-      <canvas id="pad"></canvas>
-      <div id="status" class="status" aria-live="polite"></div>
-    </div>
-  </section>
-
-  <section class="doc-panel">
-    <div class="doc-toolbar">
-      <h2>Your document</h2>
-      <div>
-        <button id="copyBtn" type="button">Copy</button>
-        <button id="downloadBtn" type="button">Download .txt</button>
-        <button id="clearDocBtn" type="button">Clear document</button>
+  <main>
+    <section class="pad-panel">
+      <div class="toolbar">
+        <label class="tool">
+          Pen
+          <input type="range" id="penSize" min="2" max="20" value="7">
+        </label>
+        <span class="spacer"></span>
+        <button id="undoBtn" type="button">Undo stroke</button>
+        <button id="clearBtn" type="button">Clear pad</button>
       </div>
-    </div>
-    <textarea id="doc" placeholder="Recognized text will appear here. You can also type or correct it directly."></textarea>
-  </section>
-</main>
 
-<script src="vendor/tesseract/tesseract.min.js"></script>
+      <div class="canvas-wrap">
+        <canvas id="pad"></canvas>
+        <div class="baseline" aria-hidden="true"></div>
+        <p class="hint" id="hint">Write a word here</p>
+      </div>
+
+      <div class="live" id="liveBar">
+        <div class="live-head">
+          <span class="live-label">Reading</span>
+          <span class="live-status" id="status">waiting for a stroke</span>
+        </div>
+        <div class="live-word" id="liveWord" aria-live="polite"></div>
+        <div class="alts" id="alts"></div>
+      </div>
+
+      <div class="commit-row">
+        <button id="commitBtn" type="button" class="primary">Add word to document</button>
+        <span class="commit-note">or just pause &mdash; it commits itself</span>
+      </div>
+    </section>
+
+    <section class="doc-panel">
+      <div class="doc-toolbar">
+        <h2>Document</h2>
+        <div class="actions">
+          <button id="copyBtn" type="button">Copy</button>
+          <button id="downloadBtn" type="button">Download</button>
+          <button id="clearDocBtn" type="button">Clear</button>
+        </div>
+      </div>
+      <textarea id="doc" placeholder="Words land here as you write. You can edit this text directly."></textarea>
+      <p class="doc-note" id="docNote"></p>
+    </section>
+  </main>
+
+  <footer>
+    <span class="dot"></span>
+    <span id="engineNote">Stroke data is sent to Google's handwriting recognition service to be read.</span>
+  </footer>
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>
